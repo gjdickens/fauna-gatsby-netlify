@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Starter Blog`,
@@ -48,6 +52,13 @@ module.exports = {
           `gatsby-remark-smartypants`,
         ],
       },
+    },
+    {
+      resolve: `gatsby-plugin-paddle`,
+      options: {
+        vendorId: process.env.PADDLE_ID,
+        debug: false
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

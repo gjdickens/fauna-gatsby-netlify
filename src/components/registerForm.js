@@ -3,13 +3,14 @@ import { useIdentityContext } from 'react-netlify-identity-gotrue';
 
 //import "./styles/memberForm.css";
 
-const RegisterForm = ({ children, setLoginType, loginType }) => {
+const RegisterForm = ({ children, loginType, setShowPopup }) => {
   const identity = useIdentityContext();
 
   const [formValues, setFormValues] = useState({
   	email: '',
     password: ''
   });
+
 
   const handleEmailInputChange = (event) => {
   	setFormValues((values) => ({
@@ -47,6 +48,7 @@ const RegisterForm = ({ children, setLoginType, loginType }) => {
     await identity.signup(newUser)
     .then(() => {
       console.log('registration successful');
+      setShowPopup(false);
     })
     .catch((e) => {
       console.log(e);
@@ -60,14 +62,13 @@ const RegisterForm = ({ children, setLoginType, loginType }) => {
         password: formValues.password
       })
     .then(() => {
-      console.log('login successful');
+      setShowPopup(false);
     })
     .catch((e) => {
       console.log(e);
     });
 
   }
-
 
 
 

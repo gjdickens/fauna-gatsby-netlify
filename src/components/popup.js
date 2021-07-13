@@ -1,9 +1,11 @@
 import React from 'react';
 import { X } from 'react-feather';
 
+import { handleKeyDown } from '../utils/utils';
+
 import './styles/popup.css';
 
-const Popup = ( { children, showPopup, setShowPopup, handleKeyDown } ) => {
+const Popup = ( { children, showPopup, setShowPopup } ) => {
 
 
   return (
@@ -13,7 +15,7 @@ const Popup = ( { children, showPopup, setShowPopup, handleKeyDown } ) => {
           <div
             className="popup-background"
             onClick={ (e) => setShowPopup(!showPopup) }
-            onKeyDown={ (e) => handleKeyDown() }
+            onKeyDown={ (e) => handleKeyDown(e, showPopup, setShowPopup) }
             tabIndex={0}
             aria-label="Toggle Popup"
             role="button"
@@ -22,7 +24,7 @@ const Popup = ( { children, showPopup, setShowPopup, handleKeyDown } ) => {
             <X
               className="popup-close"
               onClick={ (e) => setShowPopup(!showPopup) }
-              onKeyDown={ (e) => handleKeyDown() }
+              onKeyDown={ (e) => handleKeyDown(e, showPopup, setShowPopup) }
               tabIndex={0}
               aria-label="Toggle Popup"
               role="button"

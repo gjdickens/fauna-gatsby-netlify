@@ -1,13 +1,28 @@
-import * as React from "react"
-import { Link, graphql } from "gatsby"
+import React, { useState, useEffect } from 'react';
+import { Link, graphql } from "gatsby";
+import { useIdentityContext } from 'react-netlify-identity-gotrue';
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+import Bio from "../components/bio";
+import Layout from "../components/layout";
+import Seo from "../components/seo";
+import RegisterButton from "../components/registerButton";
+import PopupForm from "../components/popupForm";
+import { openPaddleCheckout } from "../utils/utils";
 
 const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
-  const posts = data.allMarkdownRemark.nodes
+  const siteTitle = data.site.siteMetadata?.title || `Title`;
+  const posts = data.allMarkdownRemark.nodes;
+  const identity = useIdentityContext();
+
+  const[showSubscribePopup, setShowSubscribePopup] = useState(false);
+  const[showPaddleCheckout, setShowPaddleCheckout] = useState(false);
+
+  useEffect(() => {
+    if (identity.user && showPaddleCheckout) {
+      openPaddleCheckout(identity.user.email);
+      setShowPaddleCheckout(false);
+    }
+  }, [identity.user, showPaddleCheckout])
 
   if (posts.length === 0) {
     return (
@@ -59,6 +74,9 @@ const BlogIndex = ({ data, location }) => {
           )
         })}
       </ol>
+      <h1>Add Paid Subscription</h1>
+      <RegisterButton showPopup={showSubscribePopup} setShowPopup={setShowSubscribePopup} showPaddleCheckout={showPaddleCheckout} setShowPaddleCheckout={setShowPaddleCheckout} user={identity.user}>Subscribe</RegisterButton>
+      <PopupForm showPopup={showSubscribePopup} setShowPopup={setShowSubscribePopup} loginType='login' />
     </Layout>
   )
 }
