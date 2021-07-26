@@ -10,7 +10,7 @@ export const handleKeyDown = (ev, showPopup, setShowPopup) => {
 }
 
 export const openPaddleCheckout = (email) => {
-  let options = {product: "656757"};
+  let options = {product: process.env.PADDLE_PRODUCT_ID};
   if(email) {
     options.email = email;
   }

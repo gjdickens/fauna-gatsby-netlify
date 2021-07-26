@@ -53,13 +53,6 @@ module.exports = {
         ],
       },
     },
-    {
-      resolve: `gatsby-plugin-paddle`,
-      options: {
-        vendorId: process.env.PADDLE_ID,
-        debug: false
-      }
-    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
