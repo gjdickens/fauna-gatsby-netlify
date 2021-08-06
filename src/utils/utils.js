@@ -9,10 +9,39 @@ export const handleKeyDown = (ev, showPopup, setShowPopup) => {
   }
 }
 
-export const openPaddleCheckout = (email) => {
-  let options = {product: process.env.PADDLE_PRODUCT_ID};
-  if(email) {
-    options.email = email;
+const addPaddleSubscription = ( netlifyID, paddleSubID ) => {
+  async function postData(url) {
+     const response = await fetch(url, {
+       method: 'POST',
+       mode: 'cors',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({netlifyID: netlifyID, paddleSubID: paddleSubID})
+     });
+     return response.json();
+   }
+   postData('/api/addsub/')
+     .then(data => {
+       console.log("Sub Added: ", data);
+     })
+     .catch((error) => {
+        console.log(error);
+      });
+  }
+
+export const openPaddleCheckout = (user) => {
+  const checkoutComplete = (data) => {
+    var checkoutId = data.checkout.id;
+
+    Paddle.Order.details(checkoutId, function(data) {
+      console.log(data.order.subscription_id);
+      addPaddleSubscription(user.id, data.order.subscription_id)
+    });
+  }
+  let options = {product: process.env.PADDLE_PRODUCT_ID, successCallback: checkoutComplete};
+  if(user && user.email) {
+    options.email = user.email;
   }
   let Paddle = window['Paddle'];
   if (Paddle) {

@@ -19,7 +19,7 @@ const BlogIndex = ({ data, location }) => {
 
   useEffect(() => {
     if (identity.user && showPaddleCheckout) {
-      openPaddleCheckout(identity.user.email);
+      openPaddleCheckout(identity.user);
       setShowPaddleCheckout(false);
     }
   }, [identity.user, showPaddleCheckout])

@@ -1,0 +1,9 @@
+type User {
+  netlifyID: ID!
+  paddleSubID: ID!
+}
+
+type Query {
+  getUserByNetlifyID(netlifyID: ID!): User!
+  getUserByPaddleSubID(paddleSubID: ID!): User!
+}
