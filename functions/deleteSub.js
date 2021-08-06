@@ -1,6 +1,7 @@
 const { faunaFetch } = require('./utils/fauna');
+const { paddleCancel } = require('./utils/paddle');
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   // Only allow POST
   if (event.httpMethod !== 'POST') {
     return {
@@ -15,6 +16,7 @@ exports.handler = async (event, context) => {
       query ($netlifyID: ID!) {
         getUserByNetlifyID(netlifyID: $netlifyID) {
           netlifyID
+          paddleSubID
           _id
         }
       }
@@ -23,6 +25,9 @@ exports.handler = async (event, context) => {
       netlifyID: netlifyID,
     },
   });
+
+  const paddleResult = await paddleCancel(result.data.getUserByNetlifyID.paddleSubID);
+  console.log(paddleResult);
 
   await faunaFetch({
     query: `

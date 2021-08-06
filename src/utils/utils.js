@@ -36,7 +36,6 @@ export const openPaddleCheckout = (user) => {
     var checkoutId = data.checkout.id;
 
     Paddle.Order.details(checkoutId, function(data) {
-      console.log(data.order.subscription_id);
       addPaddleSubscription(user.id, data.order.subscription_id)
     });
   }
@@ -52,7 +51,7 @@ export const openPaddleCheckout = (user) => {
 }
 
 
-export const getPaddleSubscription = ( netlifyID ) => {
+export const  getPaddleSubscription = async ( netlifyID ) => {
   async function postData(url) {
      const response = await fetch(url, {
        method: 'POST',
@@ -64,9 +63,24 @@ export const getPaddleSubscription = ( netlifyID ) => {
      });
      return response.json();
    }
-   postData('/api/getSub/')
+  return await postData('/api/getSub/');
+}
+
+export const cancelPaddleSubscription = ( netlifyID ) => {
+  async function postData(url) {
+     const response = await fetch(url, {
+       method: 'POST',
+       mode: 'cors',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({netlifyID: netlifyID })
+     });
+     return response.json();
+   }
+   postData('/api/deleteSub/')
      .then(data => {
-       return data;
+       console.log("Success: ", data);
      })
      .catch((error) => {
         console.log('Error: ', JSON.stringify(error));

@@ -1,7 +1,7 @@
 // src/components/profile.js
 import React, { useState, useEffect } from 'react';
 import { useIdentityContext } from 'react-netlify-identity-gotrue';
-import { getPaddleSubscription } from '../utils/utils';
+import { getPaddleSubscription, cancelPaddleSubscription } from '../utils/utils';
 
 
 const Profile = () => {
@@ -12,11 +12,18 @@ const Profile = () => {
 
   useEffect(() => {
     if (loadingSubscription) {
-      setSubscription(getPaddleSubscription);
-      setLoadingSubscription(false);
-      console.log(subscription);
+      getPaddleSubscription(identity.user.id)
+        .then(newSub => {
+          if (newSub.subs) {
+            setSubscription(newSub.data);
+          }
+          setLoadingSubscription(false);
+        })
+        .catch(err => {
+          setLoadingSubscription(false);
+        })
     }
-  }, [loadingSubscription, setSubscription, setLoadingSubscription])
+  }, [loadingSubscription, setSubscription, setLoadingSubscription, subscription, identity.user.id])
 
   if (!identity.user) {
     return <div>Loading...</div>;
@@ -26,9 +33,13 @@ const Profile = () => {
       <section className="blog-wrapper" style={{textAlign: 'center'}}>
         <h2>Account Details</h2>
         <p>Email: {identity.user.email}</p>
+        <h3>Subscriptions</h3>
         {loadingSubscription && <p>Loading Subscriptions</p>}
-        {subscription &&
-          <p>Test Subscription: {identity.user.email}</p>
+        {!loadingSubscription && subscription !== null &&
+          <p><span>Test Subscription: {subscription.paddleSubID} </span><button onClick={e => {cancelPaddleSubscription(identity.user.id); setSubscription(null); }}>Cancel</button></p>
+        }
+        {!loadingSubscription && subscription === null &&
+          <p>No current subscriptions</p>
         }
 
       </section>

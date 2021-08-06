@@ -1,6 +1,6 @@
 const { faunaFetch } = require('./utils/fauna');
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   // Only allow POST
   if (event.httpMethod !== 'POST') {
     return {
@@ -8,24 +8,35 @@ exports.handler = async (event, context) => {
       body: JSON.stringify('Method not allowed')};
   }
 
-  const { netlifyID } = JSON.parse(event.body);
+  try {
+    const { netlifyID } = JSON.parse(event.body);
 
-  const result = await faunaFetch({
-    query: `
-      query ($netlifyID: ID!) {
-        getUserByNetlifyID(netlifyID: $netlifyID) {
-          netlifyID
-          _id
+    const result = await faunaFetch({
+      query: `
+        query ($netlifyID: ID!) {
+          getUserByNetlifyID(netlifyID: $netlifyID) {
+            netlifyID
+            paddleSubID
+            _id
+          }
         }
-      }
-    `,
-    variables: {
-      netlifyID: netlifyID,
-    },
-  });
+      `,
+      variables: {
+        netlifyID: netlifyID,
+      },
+    });
 
-  return {
-    statusCode: 200,
-    body: result.data.getUserByNetlifyID,
-  };
+    return {
+      statusCode: 200,
+      body: JSON.stringify({subs: true, data: result.data.getUserByNetlifyID}),
+    };
+
+  }
+  catch (err) {
+    console.log(err); // output to netlify function log
+    return {
+      statusCode: 200,
+      body: JSON.stringify({subs: false, data: {} }),
+    };
+  }
 };
