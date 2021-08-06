@@ -31,6 +31,9 @@ const addPaddleSubscription = ( netlifyID, paddleSubID ) => {
   }
 
 export const openPaddleCheckout = (user) => {
+  addPaddleSubscription('294002b9-901e-436f-b063-f46256c7c510', '119283');
+
+  /*
   const checkoutComplete = (data) => {
     var checkoutId = data.checkout.id;
 
@@ -47,4 +50,5 @@ export const openPaddleCheckout = (user) => {
   if (Paddle) {
     Paddle.Checkout.open(options);
   }
+  */
 }
