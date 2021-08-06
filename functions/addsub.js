@@ -5,7 +5,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 200,
-      body: 'Method Not Allowed' };
+      body: JSON.stringify('Method not allowed')};
   }
 
   const { netlifyID, paddleSubID } = JSON.parse(event.body);
@@ -28,6 +28,6 @@ exports.handler = async (event) => {
 
   return {
     statusCode: 200,
-    body: 'Subscription Added'
+    body: JSON.stringify('Subscription Added')
   };
 };

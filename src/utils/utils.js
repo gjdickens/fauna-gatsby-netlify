@@ -21,7 +21,7 @@ const addPaddleSubscription = ( netlifyID, paddleSubID ) => {
      });
      return response.json();
    }
-   postData('/api/addsub/')
+   postData('/api/deletesub/')
      .then(data => {
        console.log("Sub Added: ", data);
      })

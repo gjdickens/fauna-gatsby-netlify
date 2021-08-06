@@ -5,5 +5,4 @@ type User {
 
 type Query {
   getUserByNetlifyID(netlifyID: ID!): User!
-  getUserByPaddleSubID(paddleSubID: ID!): User!
 }
