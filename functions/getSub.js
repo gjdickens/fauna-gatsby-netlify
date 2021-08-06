@@ -24,22 +24,8 @@ exports.handler = async (event, context) => {
     },
   });
 
-  await faunaFetch({
-    query: `
-      mutation ($faunaID: ID!) {
-        deleteUser(id: $faunaID) {
-          netlifyID
-          paddleSubID
-        }
-      }
-    `,
-    variables: {
-      faunaID: result.data.getUserByNetlifyID._id,
-    },
-  });
-
   return {
     statusCode: 200,
-    body: JSON.stringify('Sub Deleted'),
+    body: result.data.getUserByNetlifyID,
   };
 };

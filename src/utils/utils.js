@@ -21,19 +21,17 @@ const addPaddleSubscription = ( netlifyID, paddleSubID ) => {
      });
      return response.json();
    }
-   postData('/api/deletesub/')
+   postData('/api/addSub/')
      .then(data => {
-       console.log("Sub Added: ", data);
+       console.log("Success: ", data);
      })
      .catch((error) => {
-        console.log(error);
+        console.log('Error: ', JSON.stringify(error));
       });
   }
 
 export const openPaddleCheckout = (user) => {
-  addPaddleSubscription('294002b9-901e-436f-b063-f46256c7c510', '119283');
 
-  /*
   const checkoutComplete = (data) => {
     var checkoutId = data.checkout.id;
 
@@ -50,5 +48,27 @@ export const openPaddleCheckout = (user) => {
   if (Paddle) {
     Paddle.Checkout.open(options);
   }
-  */
+
 }
+
+
+export const getPaddleSubscription = ( netlifyID ) => {
+  async function postData(url) {
+     const response = await fetch(url, {
+       method: 'POST',
+       mode: 'cors',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({netlifyID: netlifyID})
+     });
+     return response.json();
+   }
+   postData('/api/getSub/')
+     .then(data => {
+       return data;
+     })
+     .catch((error) => {
+        console.log('Error: ', JSON.stringify(error));
+      });
+  }

@@ -1,10 +1,22 @@
 // src/components/profile.js
-import React from "react"
+import React, { useState, useEffect } from 'react';
 import { useIdentityContext } from 'react-netlify-identity-gotrue';
+import { getPaddleSubscription } from '../utils/utils';
 
 
 const Profile = () => {
   const identity = useIdentityContext();
+
+  const [loadingSubscription, setLoadingSubscription] = useState(true);
+  const [subscription, setSubscription] = useState(null);
+
+  useEffect(() => {
+    if (loadingSubscription) {
+      setSubscription(getPaddleSubscription);
+      setLoadingSubscription(false);
+      console.log(subscription);
+    }
+  }, [loadingSubscription, setSubscription, setLoadingSubscription])
 
   if (!identity.user) {
     return <div>Loading...</div>;
@@ -14,6 +26,11 @@ const Profile = () => {
       <section className="blog-wrapper" style={{textAlign: 'center'}}>
         <h2>Account Details</h2>
         <p>Email: {identity.user.email}</p>
+        {loadingSubscription && <p>Loading Subscriptions</p>}
+        {subscription &&
+          <p>Test Subscription: {identity.user.email}</p>
+        }
+
       </section>
     </>
   )

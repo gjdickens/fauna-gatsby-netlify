@@ -28,6 +28,6 @@ exports.handler = async (event) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify('Subscription Added')
+    body: JSON.stringify('Sub Added')
   };
 };
