@@ -44,6 +44,17 @@
   cursor: pointer;
 }
 
+
+form input {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    color: var(--text);
+    font-weight: normal;
+    user-select: text;
+    border-radius: 5px;
+}
+
 /*Small and Below*/
 @media only screen and (max-width: 736px) {
   .popup-inner {

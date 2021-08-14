@@ -1,5 +1,5 @@
 const { faunaFetch } = require('./utils/fauna');
-const { paddleCancel } = require('./utils/paddle');
+const { paddleCancel } = require('./utils/paddleCancel');
 
 exports.handler = async (event) => {
   // Only allow POST

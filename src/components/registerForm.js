@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useIdentityContext } from 'react-netlify-identity-gotrue';
 
-//import "./styles/memberForm.css";
 
 const RegisterForm = ({ children, loginType, setShowPopup }) => {
   const identity = useIdentityContext();
@@ -10,7 +9,6 @@ const RegisterForm = ({ children, loginType, setShowPopup }) => {
   	email: '',
     password: ''
   });
-
 
   const handleEmailInputChange = (event) => {
   	setFormValues((values) => ({
@@ -26,7 +24,6 @@ const RegisterForm = ({ children, loginType, setShowPopup }) => {
     }));
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (loginType === 'login') {
@@ -37,7 +34,6 @@ const RegisterForm = ({ children, loginType, setShowPopup }) => {
     }
 
   }
-
 
   const handleSignup = async ( formValues ) => {
     let newUser = {
@@ -69,8 +65,6 @@ const RegisterForm = ({ children, loginType, setShowPopup }) => {
     });
 
   }
-
-
 
   return (
 

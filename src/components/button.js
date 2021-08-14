@@ -2,7 +2,7 @@ import React from 'react';
 
 import { handleKeyDown } from '../utils/utils';
 
-const RegisterButton = ({ children, showPopup, setShowPopup, showPaddleCheckout, setShowPaddleCheckout, user }) => {
+const Button = ({ children, showPopup, setShowPopup, showPaddleCheckout, setShowPaddleCheckout, user }) => {
 
   const handleLoginClick = () => {
     if (!user) {
@@ -31,4 +31,4 @@ const RegisterButton = ({ children, showPopup, setShowPopup, showPaddleCheckout,
   )
 }
 
-export default RegisterButton
+export default Button;

@@ -5,8 +5,7 @@ import { useIdentityContext } from 'react-netlify-identity-gotrue';
 import Bio from "../components/bio";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
-import RegisterButton from "../components/registerButton";
-import PopupForm from "../components/popupForm";
+import Button from "../components/button";
 import { openPaddleCheckout } from "../utils/utils";
 
 const BlogIndex = ({ data, location }) => {
@@ -14,7 +13,6 @@ const BlogIndex = ({ data, location }) => {
   const posts = data.allMarkdownRemark.nodes;
   const identity = useIdentityContext();
 
-  const[showSubscribePopup, setShowSubscribePopup] = useState(false);
   const[showPaddleCheckout, setShowPaddleCheckout] = useState(false);
 
   useEffect(() => {
@@ -74,9 +72,14 @@ const BlogIndex = ({ data, location }) => {
           )
         })}
       </ol>
-      <h1>Add Paid Subscription</h1>
-      <RegisterButton showPopup={showSubscribePopup} setShowPopup={setShowSubscribePopup} showPaddleCheckout={showPaddleCheckout} setShowPaddleCheckout={setShowPaddleCheckout} user={identity.user}>Subscribe</RegisterButton>
-      <PopupForm showPopup={showSubscribePopup} setShowPopup={setShowSubscribePopup} loginType='login' />
+      {
+        identity.user &&
+        <>
+          <h1>Add Subscription</h1>
+          <Button showPaddleCheckout={showPaddleCheckout} setShowPaddleCheckout={setShowPaddleCheckout} user={identity.user}>Subscribe</Button>
+        </>
+      }
+
     </Layout>
   )
 }

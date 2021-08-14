@@ -1,71 +1,41 @@
 import React, { useState } from 'react';
 import { Link } from "gatsby"
-import { useIdentityContext } from 'react-netlify-identity-gotrue';
 
-import PopupForm from './popupForm';
-import RegisterButton from './registerButton';
-import { handleKeyDown } from '../utils/utils';
+import Popup from './popup';
+import RegisterForm from './registerForm';
+import LoginButtons from './loginButtons';
 
 const Layout = ({ location, title, children }) => {
   const rootPath = `${__PATH_PREFIX__}/`;
   const isRootPath = location.pathname === rootPath
   let header
 
-  const identity = useIdentityContext();
-
   const[showRegisterPopup, setShowRegisterPopup] = useState(false);
   const[showLoginPopup, setShowLoginPopup] = useState(false);
 
-  const LoginButtons = () => (
+
+  header = (
     <>
-      {!identity.user &&
-        <>
-        <div className="headerButton">
-          <RegisterButton showPopup={showRegisterPopup} setShowPopup={setShowRegisterPopup}>Sign Up</RegisterButton>
-          <RegisterButton showPopup={showLoginPopup} setShowPopup={setShowLoginPopup}>Login</RegisterButton>
-        </div>
-        </>
-
-      }
-      {identity.user &&
-        <>
-        <div className="headerButton">
-          <button
-             ><Link to="/account/profile">Profile</Link></button>
-          <button
-            className="link"
-            onClick={identity.logout}
-            onKeyDown={identity.logout}
-             >Logout</button>
-        </div>
-        </>
-      }
-    </>
-  )
-
-  if (isRootPath) {
-    header = (
-      <>
+      {isRootPath ?
         <h1 className="main-heading">
           <Link to="/">{title}</Link>
         </h1>
-        <LoginButtons />
-        <PopupForm showPopup={showRegisterPopup} setShowPopup={setShowRegisterPopup} loginType='register' />
-        <PopupForm showPopup={showLoginPopup} setShowPopup={setShowLoginPopup} loginType='login' />
-      </>
-    )
-  } else {
-    header = (
-      <>
-        <Link className="header-link-home" to="/">
-          {title}
-        </Link>
-        <LoginButtons />
-        <PopupForm showPopup={showRegisterPopup} setShowPopup={setShowRegisterPopup} loginType='register' />
-        <PopupForm showPopup={showLoginPopup} setShowPopup={setShowLoginPopup} loginType='login' />
-      </>
-    )
-  }
+         :
+         <Link className="header-link-home" to="/">
+           {title}
+         </Link>
+       }
+      <LoginButtons showRegisterPopup={showRegisterPopup} setShowRegisterPopup={setShowRegisterPopup} showLoginPopup={showLoginPopup} setShowLoginPopup={setShowLoginPopup} />
+      <Popup showPopup={showRegisterPopup} setShowPopup={setShowRegisterPopup} >
+        <h1 style={{textAlign: 'center', paddingBottom: '2rem'}}>Join now</h1>
+        <RegisterForm loginType='register' setShowPopup={setShowRegisterPopup} />
+      </Popup>
+      <Popup showPopup={showLoginPopup} setShowPopup={setShowLoginPopup} >
+        <h1 style={{textAlign: 'center', paddingBottom: '2rem'}}>Sign in to access your account</h1>
+        <RegisterForm loginType='login' setShowPopup={setShowLoginPopup} />
+      </Popup>
+    </>
+  )
 
   return (
     <div className="global-wrapper" data-is-root-path={isRootPath}>
