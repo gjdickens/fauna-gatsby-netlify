@@ -5,6 +5,8 @@ const React = require(`react`);
  * @link https://paddle.com/docs/paddle-checkout-web/
  */
 exports.onRenderBody = ({ setPostBodyComponents }) => {
+	//Note: These have only been commented out so that the demo for fauna-paddle-netlify-example.epilocal.com will function
+	/*
 	if (process.env.NODE_ENV === `production`) {
 		return setPostBodyComponents([
 			<script key="gatsby-plugin-paddle" src="https://cdn.paddle.com/paddle/paddle.js" />,
@@ -18,6 +20,7 @@ exports.onRenderBody = ({ setPostBodyComponents }) => {
 		]);
 	}
 	else {
+	*/
 		return setPostBodyComponents([
 			<script key="gatsby-plugin-paddle" src="https://cdn.paddle.com/paddle/paddle.js" />,
 			<script
@@ -28,5 +31,5 @@ exports.onRenderBody = ({ setPostBodyComponents }) => {
 				}}
 			/>
 		]);
-	}
+	//}
 };

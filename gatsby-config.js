@@ -59,7 +59,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-netlify-identity-gotrue`,
       options: {
-        url: `https://blissful-kalam-ae3bf5.netlify.app` // ❗REQUIRED❗
+        url: `https://fauna-netlify-paddle-example.epilocal.com/` // ❗REQUIRED❗
         // Do _not_ include any path (/.netlify/identity, etc.) and
         // leave the trailing slash off.
       }
