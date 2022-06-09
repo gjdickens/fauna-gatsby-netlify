@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 exports.faunaFetch = async ({ query, variables }) => {
   return await fetch('https://graphql.fauna.com/graphql', {

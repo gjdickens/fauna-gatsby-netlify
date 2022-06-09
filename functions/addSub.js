@@ -11,7 +11,7 @@ exports.handler = async (event) => {
   const { netlifyID, paddleSubID } = JSON.parse(event.body);
 
   // link the Netlify and Paddle Sub IDs in Fauna
-  await faunaFetch({
+  const response = await faunaFetch({
     query: `
       mutation ($netlifyID: ID!, $paddleSubID: ID!) {
         createUser(data: { netlifyID: $netlifyID, paddleSubID: $paddleSubID }) {

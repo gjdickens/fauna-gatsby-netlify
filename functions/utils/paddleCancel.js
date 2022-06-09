@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 exports.paddleCancel = async (subID) => {
   return await fetch('https://sandbox-vendors.paddle.com/api/2.0/subscription/users_cancel', {
